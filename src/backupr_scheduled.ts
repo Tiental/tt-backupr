@@ -1,8 +1,10 @@
+import { IBackuprConfig } from "./backupr_config_loader";
+
 function sleep (time: number): Promise<void> {
     return new Promise(res => setTimeout(res, time));
 }
 
-interface IConfigSchedule {
+export interface IConfigSchedule {
     days: number[],
     hours: number[],
     minutes: number[]
@@ -43,10 +45,10 @@ function shouldRun(configSchedule: IConfigSchedule) {
 }
 
 let checkInterval = 200
-export async function runScheduler(config: IConfigSchedule, func: () => {}) {
+export async function runScheduler(config: IBackuprConfig, func: (config: IBackuprConfig) => Promise<void>) {
     while (true) {
-        if (shouldRun(config)) {
-            func()
+        if (shouldRun(config.schedule)) {
+            await func(config)
         }
         await sleep(checkInterval)
     }

@@ -6,6 +6,7 @@ import path from 'path';
 import { IBackuprConfig, loadConfig } from './backupr_config_loader';
 import { mongoDump } from './backupr_driver_mongo';
 import { s3Receive } from './backupr_receiver_s3';
+import { runScheduler } from './backupr_scheduled';
 
 const optionDefinitions = [
     { name: 'immediate', alias: 'i', type: Boolean },
@@ -50,4 +51,8 @@ const config = loadConfig();
 
 if (args.immediate) {
     execute(config);
+}
+
+if (args.scheduled) {
+    runScheduler(config, execute);
 }
