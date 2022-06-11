@@ -1,0 +1,25 @@
+{
+    "schedule": {
+        "hours": [1],
+        "minutes": [0]
+    },
+    "drivers": [
+        {
+            "type": "mongo",
+            "dbList": ["exampleDBName"]
+        },
+        {
+            "type": "folder",
+            "folderPath": "example/folder"
+        }
+    ],
+    "receivers": [
+        {
+            "type": "s3",
+            "accessKeyId": "access_key",
+            "secretAccessKey": "secret",
+            "endpoint": "https://enpoint",
+            "bucket": "example_bucket"
+        }
+    ]
+}
