@@ -6,3 +6,5 @@ mongotools/*
 
 payload
 .log
+
+.backuprconfig.json
