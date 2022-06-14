@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path';
 
-import { execFileSync } from 'child_process';
+import { exec, execFileSync } from 'child_process';
 
 export interface IConfigDriverMongo {
     type: string,
+    useToolsFolder: boolean,
     dbList: string[];
 }
 
@@ -26,15 +27,18 @@ export async function mongoDump(mongoDriverConfig: IConfigDriverMongo) {
     for (let db of dbs) {
         // Get archive file
         const archiveFile = path.join(dumpsPath, `db_${db}_${date.valueOf()}.backup`)
-
-        // Run backup command
-        execFileSync(
-            mongodumpPath,
-            [
-                `--db=${db}`,
-                `--archive=${archiveFile}`
-            ],
-        );
+        if (mongoDriverConfig.useToolsFolder == true) {
+            // Run backup command
+            execFileSync(
+                mongodumpPath,
+                [
+                    `--db=${db}`,
+                    `--archive=${archiveFile}`
+                ],
+            );
+        } else {
+            exec(`mongodump --db=${db} --archive=${archiveFile}`)
+        }
     }
 
     console.log('MongoDump finished.')

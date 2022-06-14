@@ -1,16 +1,19 @@
 {
     "schedule": {
-        "hours": [1],
-        "minutes": [0]
+        "hours": [
+            1
+        ],
+        "minutes": [
+            0
+        ]
     },
     "drivers": [
         {
             "type": "mongo",
-            "dbList": ["exampleDBName"]
-        },
-        {
-            "type": "folder",
-            "folderPath": "example/folder"
+            "useToolsFolder": false,
+            "dbList": [
+                "exampleDBName"
+            ]
         }
     ],
     "receivers": [
