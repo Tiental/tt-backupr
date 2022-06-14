@@ -1,0 +1,21 @@
+{
+    "schedule": {},
+    "drivers": [
+        {
+            "type": "mongo",
+            "useToolsFolder": false,
+            "dbList": [
+                "studybuddy"
+            ]
+        }
+    ],
+    "receivers": [
+        {
+            "type": "s3",
+            "accessKeyId": "JJZNQK9JXSTZGYBNU353",
+            "secretAccessKey": "rc4K8oyqrqyreoZHEPjCtPaYIL6jyqHOgzRfc53J",
+            "endpoint": "ewr1.vultrobjects.com",
+            "bucket": "accountsapi"
+        }
+    ]
+}
