@@ -43,6 +43,8 @@ function execute(config) {
                 yield (0, backupr_driver_mongo_1.mongoDump)(driver);
             }
         }
+        const sleep = (time) => new Promise(res => setTimeout(res, time, "done sleeping"));
+        yield sleep(1000);
         // Tarball payload
         function zipDirectory(sourceDir, outPath) {
             const archive = (0, archiver_1.default)('zip');

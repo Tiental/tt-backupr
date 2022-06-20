@@ -1,4 +1,3 @@
-os = require('os')
 path = require('path')
 archiver = require('archiver')
 fs = require('fs')

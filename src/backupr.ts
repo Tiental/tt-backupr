@@ -34,6 +34,9 @@ async function execute(config: IBackuprConfig) {
         }
     }
 
+    const sleep = (time:number) => new Promise(res => setTimeout(res, time, "done sleeping"));
+    await sleep(1000)
+
     // Tarball payload
     function zipDirectory(sourceDir: string, outPath: string) {
         const archive = archiver('zip');
