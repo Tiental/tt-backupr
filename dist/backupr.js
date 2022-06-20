@@ -54,7 +54,13 @@ function execute(config) {
                 archive.finalize();
             });
         }
-        yield zipDirectory(payloadPath, payloadZipPath);
+        try {
+            yield zipDirectory(payloadPath, payloadZipPath);
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
         console.log('zipped...');
         // Run all receivers
         for (const receiver of config.receivers) {

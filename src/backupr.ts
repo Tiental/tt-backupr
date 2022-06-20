@@ -47,8 +47,13 @@ async function execute(config: IBackuprConfig) {
         });
     }
 
-
-    await zipDirectory(payloadPath, payloadZipPath)
+    try {
+        await zipDirectory(payloadPath, payloadZipPath)
+    }
+    catch(error) {
+        console.log(error)
+        throw error
+    }
 
     console.log('zipped...')
 
