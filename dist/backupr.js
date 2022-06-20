@@ -50,7 +50,7 @@ function execute(config) {
             return new Promise((resolve, reject) => {
                 archive.pipe(stream);
                 archive.glob('**/*', { cwd: sourceDir }).on('error', err => reject(err));
-                stream.on('close', () => resolve());
+                stream.on('close', () => { console.log('close stream'); resolve(); });
                 archive.finalize();
             });
         }
