@@ -1,9 +1,0 @@
-Since Bash 4 (also including zsh) a new globbing option (globstar) has been added which treats the pattern ** differently when it's set.
-
-It is matching the wildcard pattern and returning the file and directory names that match then by replacing the wildcard pattern in the command with the matched items.
-
-Normally when you use **, it works similar to *, but it's recurses all the directories recursively (like a loop).
-
-To see if it's enabled, check it by shopt globstar (in scripting, use shopt -q globstar).
-
-The example **.py would work only for the current directory, as it doesn't return list of directories which can be recurses, so that's 
