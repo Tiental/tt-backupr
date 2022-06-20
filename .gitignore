@@ -5,6 +5,7 @@ mongotools/*
 !mongotools/readme.txt
 
 payload
+payload.zip
 .log
 
 .backuprconfig.json

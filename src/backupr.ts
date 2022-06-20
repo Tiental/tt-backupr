@@ -1,4 +1,4 @@
-import ZipDir from 'zip-dir';
+import archiver from 'archiver';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs'
 import path from 'path';
@@ -17,11 +17,14 @@ const args = commandLineArgs(optionDefinitions)
 
 async function execute(config: IBackuprConfig) {
     const payloadPath = path.join(__dirname, 'payload')
-    const payloadZipPath = path.join(payloadPath, 'payload.zip')
+    const payloadZipPath = path.join(__dirname, 'payload.zip')
 
     // Clean out payload folder
     if (fs.existsSync(payloadPath)) {
         fs.rmSync(payloadPath, { recursive: true })
+    }
+    if (fs.existsSync(payloadZipPath)) {
+        fs.rmSync(payloadZipPath, { recursive: true })
     }
     fs.mkdirSync(payloadPath)
 
@@ -33,7 +36,25 @@ async function execute(config: IBackuprConfig) {
     }
 
     // Zip payload
-    await ZipDir(payloadPath, {saveTo: payloadZipPath});
+    function zipDirectory(sourceDir: string, outPath: string) {
+        const archive = archiver('zip', { zlib: { level: 9 } });
+        const stream = fs.createWriteStream(outPath);
+
+        return new Promise<void>((resolve, reject) => {
+            archive
+                .directory(sourceDir, false)
+                .on('error', err => reject(err))
+                .pipe(stream)
+                ;
+
+            stream.on('close', () => resolve());
+            archive.finalize();
+        });
+    }
+
+
+    await zipDirectory(payloadPath, payloadZipPath)
+
     console.log('zipped...')
 
     // Run all receivers

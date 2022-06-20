@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const zip_dir_1 = __importDefault(require("zip-dir"));
+const archiver_1 = __importDefault(require("archiver"));
 const command_line_args_1 = __importDefault(require("command-line-args"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
@@ -28,10 +28,13 @@ const args = (0, command_line_args_1.default)(optionDefinitions);
 function execute(config) {
     return __awaiter(this, void 0, void 0, function* () {
         const payloadPath = path_1.default.join(__dirname, 'payload');
-        const payloadZipPath = path_1.default.join(payloadPath, 'payload.zip');
+        const payloadZipPath = path_1.default.join(__dirname, 'payload.zip');
         // Clean out payload folder
         if (fs_1.default.existsSync(payloadPath)) {
             fs_1.default.rmSync(payloadPath, { recursive: true });
+        }
+        if (fs_1.default.existsSync(payloadZipPath)) {
+            fs_1.default.rmSync(payloadZipPath, { recursive: true });
         }
         fs_1.default.mkdirSync(payloadPath);
         // Run all drivers
@@ -41,7 +44,19 @@ function execute(config) {
             }
         }
         // Zip payload
-        yield (0, zip_dir_1.default)(payloadPath, { saveTo: payloadZipPath });
+        function zipDirectory(sourceDir, outPath) {
+            const archive = (0, archiver_1.default)('zip', { zlib: { level: 9 } });
+            const stream = fs_1.default.createWriteStream(outPath);
+            return new Promise((resolve, reject) => {
+                archive
+                    .directory(sourceDir, false)
+                    .on('error', err => reject(err))
+                    .pipe(stream);
+                stream.on('close', () => resolve());
+                archive.finalize();
+            });
+        }
+        yield zipDirectory(payloadPath, payloadZipPath);
         console.log('zipped...');
         // Run all receivers
         for (const receiver of config.receivers) {
