@@ -43,15 +43,13 @@ function execute(config) {
                 yield (0, backupr_driver_mongo_1.mongoDump)(driver);
             }
         }
-        // Zip payload
+        // Tarball payload
         function zipDirectory(sourceDir, outPath) {
-            const archive = (0, archiver_1.default)('zip', { zlib: { level: 9 } });
+            const archive = (0, archiver_1.default)('zip');
             const stream = fs_1.default.createWriteStream(outPath);
             return new Promise((resolve, reject) => {
-                archive
-                    .directory(sourceDir, false)
-                    .on('error', err => reject(err))
-                    .pipe(stream);
+                archive.pipe(stream);
+                archive.glob('**/*', { cwd: sourceDir }).on('error', err => reject(err));
                 stream.on('close', () => resolve());
                 archive.finalize();
             });

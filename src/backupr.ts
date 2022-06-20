@@ -2,7 +2,6 @@ import archiver from 'archiver';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs'
 import path from 'path';
-
 import { IBackuprConfig, loadConfig } from './backupr_config_loader';
 import { mongoDump } from './backupr_driver_mongo';
 import { s3Receive } from './backupr_receiver_s3';
@@ -35,18 +34,14 @@ async function execute(config: IBackuprConfig) {
         }
     }
 
-    // Zip payload
+    // Tarball payload
     function zipDirectory(sourceDir: string, outPath: string) {
-        const archive = archiver('zip', { zlib: { level: 9 } });
+        const archive = archiver('zip');
         const stream = fs.createWriteStream(outPath);
 
         return new Promise<void>((resolve, reject) => {
-            archive
-                .directory(sourceDir, false)
-                .on('error', err => reject(err))
-                .pipe(stream)
-                ;
-
+            archive.pipe(stream);
+            archive.glob('**/*', {cwd: sourceDir}).on('error', err => reject(err))
             stream.on('close', () => resolve());
             archive.finalize();
         });
@@ -65,7 +60,6 @@ async function execute(config: IBackuprConfig) {
     }
 
     console.log('finish.')
-
 }
 
 const config = loadConfig();
