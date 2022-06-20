@@ -16,19 +16,19 @@ Backupr currently supports :
 - S3 Storage
 
 ## Setup
-**Requirements**
+**Requirements** \
 Backupr requires a NodeJS installation
 
-**Install yarn package manager**
+**Install yarn package manager** \
 Follow the installation instructions at:
 https://classic.yarnpkg.com/en/
 
-**Clone repository**
+**Clone repository** \
 ```bash
 git clone git@github.com:Tiental/backupr.git
 ```
 
-**Install dependancies**
+**Install dependancies** \
 ```bash
 cd backupr
 ```
@@ -36,7 +36,7 @@ cd backupr
 yarn
 ```
 
-**Configure**
+**Configure** \
 Copy example config file
 ```bash
 cp example.backuprconfig.json ./dist/.backuprconfig.json
@@ -46,7 +46,7 @@ Edit config file
 sudo nano ./dist/.backuprconfig.json
 ```
 
-**Start Backupr**
+**Start Backupr** \
 You can run Backupr with node in whatever way you wish
 ```bash
 node ./dist/backupr.js --immediate
@@ -90,7 +90,7 @@ This example will run a daily backup at 01:00 UTC time
 }
 ```
 
-**Schedule for weekly backup**
+**Schedule for weekly backup** \
 This example will run a weekly backup on Mondays and Fridays at 01:00 UTC time
 ```json
 "schedule": {
@@ -106,7 +106,7 @@ This example will run a weekly backup on Mondays and Fridays at 01:00 UTC time
 }
 ```
 
-**Schedule for hourly backup**
+**Schedule for hourly backup** \
 This example will run a every hour
 ```json
 "schedule": {
@@ -125,6 +125,6 @@ Then create an exported async function which performs whatever tasks you need to
 
 This directory will be zipped and sent to all your receivers
 
-**TODO:**
+**TODO:** \
 - Create a base class or interface for drivers and receivers so new implementations can simply extend those classes
 - Build out notifiers
