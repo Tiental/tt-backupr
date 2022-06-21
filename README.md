@@ -12,6 +12,7 @@ If Backupr is missing something you can add your own implementations and recompi
 Backupr currently supports :
 ###### Drivers
 - MongoDB mongodump's
+- MySQL dump
 ###### Receivers
 - S3 Storage
 
@@ -76,6 +77,14 @@ This example will run a daily backup at 01:00 UTC time
             "dbList": [
                 "db_to_backup"
             ]
+        },
+        {
+            "type": "mysql",
+            "useToolsFolder": false,
+            "dbList": [
+                "db_to_backup"
+            ],
+            "dbPassword": "db_password"
         }
     ],
     "receivers": [
