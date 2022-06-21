@@ -18,6 +18,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const backupr_config_loader_1 = require("./backupr_config_loader");
 const backupr_driver_mongo_1 = require("./backupr_driver_mongo");
+const backupr_driver_mysql_1 = require("./backupr_driver_mysql");
 const backupr_receiver_s3_1 = require("./backupr_receiver_s3");
 const backupr_scheduled_1 = require("./backupr_scheduled");
 const optionDefinitions = [
@@ -41,6 +42,9 @@ function execute(config) {
         for (const driver of config.drivers) {
             if (driver.type == "mongo") {
                 yield (0, backupr_driver_mongo_1.mongoDump)(driver);
+            }
+            if (driver.type == "mysql") {
+                yield (0, backupr_driver_mysql_1.mysqlDump)(driver);
             }
         }
         const sleep = (time) => new Promise(res => setTimeout(res, time, "done sleeping"));

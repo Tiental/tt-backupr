@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path';
-import { IConfigDriverMongo } from './backupr_driver_mongo';
+import { IConfigDriver } from './types';
 import { IConfigReceiverS3 } from './backupr_receiver_s3';
 import { IConfigSchedule } from './backupr_scheduled';
 
 export interface IBackuprConfig {
-    drivers: Array<IConfigDriverMongo>,
+    drivers: Array<IConfigDriver>,
     receivers: Array<IConfigReceiverS3>,
     schedule: IConfigSchedule,
 }

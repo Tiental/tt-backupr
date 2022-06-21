@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path';
 import { IBackuprConfig, loadConfig } from './backupr_config_loader';
 import { mongoDump } from './backupr_driver_mongo';
+import { mysqlDump } from './backupr_driver_mysql';
 import { s3Receive } from './backupr_receiver_s3';
 import { runScheduler } from './backupr_scheduled';
 
@@ -31,6 +32,9 @@ async function execute(config: IBackuprConfig) {
     for (const driver of config.drivers) {
         if (driver.type == "mongo") {
             await mongoDump(driver)
+        }
+        if (driver.type == "mysql") {
+            await mysqlDump(driver)
         }
     }
 

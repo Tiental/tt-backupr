@@ -2,14 +2,9 @@ import fs from 'fs'
 import path from 'path';
 
 import { exec, execFileSync } from 'child_process';
+import { IConfigDriver } from "./types";
 
-export interface IConfigDriverMongo {
-    type: string,
-    useToolsFolder: boolean,
-    dbList: string[];
-}
-
-export async function mongoDump(mongoDriverConfig: IConfigDriverMongo) {
+export async function mongoDump(mongoDriverConfig: IConfigDriver) {
 
     const date = new Date()
     console.log('Backupr initialized at ' + date.toISOString() + ' : ' + date.valueOf())
