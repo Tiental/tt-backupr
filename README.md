@@ -55,7 +55,7 @@ node ./dist/backupr.js --immediate
 
 To run scheduled backups We recommend you use [Pm2](https://pm2.keymetrics.io/)
 ```bash
-pm2 start ./dist/backupr.js --scheduled
+pm2 start ./dist/backupr.js -- --scheduled
 ```
 
 ## Example configuration
